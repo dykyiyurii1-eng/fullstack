@@ -1,20 +1,17 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
-async function getJson(path){
-  const res = await fetch(`${API_URL}${path}`)
-  if (!res.ok){
-    throw new Error(`HTTP status ${res.status}`)
-
-  }
-  return res.json();
+async function getJson(path) {
+    const res = await fetch(`${API_URL}${path}`)
+    if (!res.ok) {
+        throw new Error(`HTTP status ${res.status}`)
+    }
+    return res.json()
 }
 
-export function getSettings(){
-  return getJson('/api/setting')
+export function getSettings() {
+    return getJson('/api/common')   
 }
 
-export function getPage(path){
-  return getJson(`/api/pages?path=${encodeURIComponent(path)}`)
+export function getPage(path) {
+    return getJson(`/api/page?path=${encodeURIComponent(path)}`)  
 }
-
-

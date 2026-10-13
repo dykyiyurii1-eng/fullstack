@@ -1,28 +1,8 @@
 import './styles/base.css'
 import { getSettings, getPage } from "./api.js"
 import { renderBlocks } from './renderBlocks.js'
-
-function renderHeader(setting) {
-  return `
-    <header class="header">
-      <a class="header__logo" href="/">${setting.siteName}</a>
-      <nav class="header__nav">
-        ${setting.menu.map(({ label, link }) => `
-          <a class="header__link" href="${link}">${label}</a>
-        `).join('')}
-      </nav>
-    </header>
-  `
-}
-
-function renderFooter(setting) {
-  return `
-    <footer class="footer">
-      <p>${setting.footer.text}</p>
-      <p>&copy; ${new Date().getFullYear()} ${setting.siteName}</p>
-    </footer>
-  `
-}
+import { footer } from './layout/footer.js'
+import { header } from './layout/header.js'
 
 async function start() {
   const app = document.querySelector("#app")
@@ -35,14 +15,14 @@ async function start() {
     document.title = `${page.title} - ${setting.siteName}`
 
     app.innerHTML = `
-      ${renderHeader(setting)}
+      ${header(setting)}
       <main>
         ${renderBlocks(page.blocks)}
       </main>
-      ${renderFooter(setting)}
+      ${footer(setting)}
     `
   } catch (error) {
-    app.textContent = `Error ${error.message}`
+    app.textContent = `Error: ${error.message}`
   }
 }
 
